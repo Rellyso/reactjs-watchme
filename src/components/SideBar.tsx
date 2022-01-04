@@ -1,16 +1,49 @@
-interface SidebarProps {
-  title: string | JSX.Element;
-  children: JSX.Element[];
+import { memo } from "react"
+import { AutoSizer, List, ListRowRenderer } from 'react-virtualized'
+import { Button } from "./Button"
+
+interface GenreResponseProps {
+  id: number;
+  name: 'action' | 'comedy' | 'documentary' | 'drama' | 'horror' | 'family';
+  title: string;
 }
 
-export function SideBar({ children, title }: SidebarProps) {
+interface SidebarProps {
+  genres: GenreResponseProps[];
+  selectedGenreId: number;
+  handleClickButton: (id: number) => void;
+}
+
+function SideBarComponent({ genres, selectedGenreId, handleClickButton }: SidebarProps) {
+
+  const rowRenderer: ListRowRenderer = ({ key, style, index }) => {
+    return (
+      <div key={key} style={style}>
+
+
+      </div>
+    )
+  }
+
   return (
     <nav className="sidebar">
-      <span>{title}</span>
+      <span>Watch<p>Me</p></span>
 
       <div className="buttons-container">
-        {children}
+
+        {genres.map(genre =>
+          <Button
+            id={String(genre.id)}
+            key={genre.id}
+            title={genre.title}
+            iconName={genre.name}
+            onClick={() => handleClickButton(genre.id)}
+            selected={selectedGenreId === genre.id}
+          />
+        )}
       </div>
     </nav>
   )
 }
+
+export const SideBar = memo(SideBarComponent)

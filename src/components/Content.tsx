@@ -1,9 +1,11 @@
+import { memo } from "react"
+
 interface ContentProps {
   categoryName: string;
   children: JSX.Element[];
 }
 
-export function Content({ children, categoryName }: ContentProps) {
+function ContentComponent({ children, categoryName }: ContentProps) {
   return (
     <div className="container">
       <header>
@@ -18,3 +20,7 @@ export function Content({ children, categoryName }: ContentProps) {
     </div>
   )
 }
+
+export const Content = memo(ContentComponent, (prevProps, nextProps) => {
+  return prevProps.categoryName === nextProps.categoryName
+})
