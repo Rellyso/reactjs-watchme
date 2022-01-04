@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import { Button } from './components/Button';
 import { MovieCard } from './components/MovieCard';
@@ -53,27 +53,17 @@ export function App() {
     })
   }, [selectedGenreId]);
 
-  function handleClickButton(id: number) {
+  const handleClickButton = useCallback((id: number) => {
     setSelectedGenreId(id);
-  }
+  }, []);
 
   return (
     <div style={{ display: 'flex', flexDirection: 'row' }}>
-      <SideBar title={
-        <>
-          Watch<p>Me</p>
-        </>
-      }>
-        {genres.map(genre => (
-          <Button
-            id={String(genre.id)}
-            title={genre.title}
-            iconName={genre.name}
-            onClick={() => handleClickButton(genre.id)}
-            selected={selectedGenreId === genre.id}
-          />
-        ))}
-      </SideBar>
+      <SideBar
+        genres={genres}
+        selectedGenreId={selectedGenreId}
+        handleClickButton={handleClickButton}
+      />
 
       <Content categoryName={selectedGenre.title}>
         {movies.map(movie => (
