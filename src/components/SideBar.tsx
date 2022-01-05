@@ -15,16 +15,6 @@ interface SidebarProps {
 }
 
 function SideBarComponent({ genres, selectedGenreId, handleClickButton }: SidebarProps) {
-
-  const rowRenderer: ListRowRenderer = ({ key, style, index }) => {
-    return (
-      <div key={key} style={style}>
-
-
-      </div>
-    )
-  }
-
   return (
     <nav className="sidebar">
       <span>Watch<p>Me</p></span>
